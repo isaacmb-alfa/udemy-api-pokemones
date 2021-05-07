@@ -25,7 +25,7 @@ const Poke = () => {
             <div className="card-title text-uppercase">
              {nombre}
             </div>
-            <p className="card-text">Alt: {alto} | Ancho: {ancho}</p>
+            <p className="card-text">Alto: {alto} | Ancho: {ancho}</p>
             </div>
         </div>
         </div>
