@@ -23,6 +23,7 @@ const Navbar = ({ history }) => {
                         activo ? (
                             <>
                                 <NavLink className="btn btn-dark mx-1" to="/" exact>Inicio</NavLink>
+                                <NavLink className="btn btn-dark mx-1" to="/perfil" exact>Perfil</NavLink>
                                 <button className="btn btn-dark mx-1" onClick={handleCerrarSecion} >Cerrar Seción</button>
                             </>
                         ) : (

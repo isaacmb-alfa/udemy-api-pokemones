@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Pokemones from './components/Pokemones';
 import Login from './components/Login';
 import Navbar from './components/Navbar';
+import Perfil from './components/Perfil';
 import {
     BrowserRouter as Router,
     Switch,
@@ -51,6 +52,7 @@ function App() {
                 <Switch>
                     <RutaProtegida component={Pokemones} path="/" exact />
                     <Route component={Login} path="/login" exact />
+                    <Route component={Perfil} path="/perfil" exact />
                 </Switch>
             </div>
         </Router>
