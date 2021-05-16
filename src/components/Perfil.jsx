@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { actualizarUsuarioAccion } from '../redux/usuarioDucks';
+import { actualizarUsuarioAccion, editarFotoAccion } from '../redux/usuarioDucks';
 
 const Perfil = () => {
     const { displayName, email, photoURL } = useSelector(store => store.usuario.user);
@@ -8,6 +8,7 @@ const Perfil = () => {
 
     const [nombreUsuario, setNombreUsuario] = useState(displayName);
     const [activarForm, setActivarForm] = useState(false);
+    const [error, setError] = useState(false);
     const dispatch = useDispatch();
 
     const handleActivarForm = () => {
@@ -25,6 +26,23 @@ const Perfil = () => {
     const handleUsuarioDatos = (e) => {
         setNombreUsuario(e.target.value)
     }
+    const handleSelectFile = (e) => {
+        console.log(e.target.files[0]);
+        const imgCliente = e.target.files[0]
+
+        if (imgCliente === undefined) {
+            console.log('No se selecciono imagen');
+            return
+        }
+
+        if (imgCliente.type === 'image/png' || imgCliente.type === 'image/jpeg') {
+            dispatch(editarFotoAccion(imgCliente))
+            setError(false)
+        } else {
+            setError(true)
+        }
+    }
+
     return (
         <div className="mt-5 text-center">
             <div className="card">
@@ -33,15 +51,36 @@ const Perfil = () => {
                     <h5 className="card-title">Nombre {displayName}</h5>
                     <p className="card-text">Email: {email}</p>
                     <button className="btn btn-dark" onClick={handleActivarForm}>Editar nombre</button>
+                    {
+                        error && 
+                        <div className="alert alert-warning mt-3">
+                        Solo archivos .png o .jpg
+                        </div>
+                    }
+                    <div className="input-group mb-3 justify-content-center">
+                        <input
+                            type="file"
+                            className="form-control mt-2"
+                            id="inputGroupFile02"
+                            style={{ display: 'none' }}
+                            onChange={handleSelectFile}
+                            disabled={loading}
+                        />
+                        <label
+                            className={loading ? 'btn btn-dark mt-2 disabled': 'btn btn-dark mt-2'}
+                            htmlFor="inputGroupFile02">
+                            Actualizar imagen
+                        </label>
+                    </div>
                 </div>
                 {
                     loading && (
                         <div className="card-body">
-                        <div className="d-flex justify-content-center my-3">
-                            <div className="bouncingLoader">
-                            <div></div>
+                            <div className="d-flex justify-content-center my-3">
+                                <div className="bouncingLoader">
+                                    <div></div>
+                                </div>
                             </div>
-                        </div>
                         </div>
                     )
                 }
